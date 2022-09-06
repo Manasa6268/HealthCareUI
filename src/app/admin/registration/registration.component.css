@@ -1,0 +1,31 @@
+.heading
+{
+    background-color: cornflowerblue;
+    text-align: center;
+    color: white;
+}
+ 
+  .innercard
+  {
+    width: 350px;
+    height: auto;
+    margin-left:150px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .outercard
+  {
+    width: 650px;
+    height: 400px;
+    margin-left:300px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .loginfields
+  {
+    margin-left: 25px;
+  }
+  .alert
+  {
+    color: red;
+  }
