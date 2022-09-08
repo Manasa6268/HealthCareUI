@@ -1,0 +1,70 @@
+<div class="card outercard">
+    <div class="card-header heading">
+        <h4>HealthCare Member Portal</h4>
+    </div>
+    <div class="card shadow p-3 mb-5 bg-white rounded innercard">
+        <div class="card-header">
+            <h4>Member Registration</h4>
+        </div>
+        <div style="height: 15px;"></div>
+        <div class="cards-container">
+            <div class="cards-form">
+                <form #form="ngForm" (ngSubmit)="onSubmit()">
+                    <div class="loginfields">
+                        <div class=" form-group">
+                            <div>
+                                <label for="">Name : </label>&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="text" name="title" id="title" required minlength="4" [(ngModel)]="username"
+                                    #title="ngModel">&nbsp;
+                                <input type="text" name="lastname">
+                            </div>
+                            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
+                                <div *ngIf="title.errors?.['required']">
+                                    Title is required.
+                                </div>
+                                <div *ngIf="title.errors?.['minlength']">
+                                    Title must be at least 4 characters long.
+                                </div>
+                            </div>
+
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="">User Name : </label>&nbsp;
+                            <input type="text" name="password">
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="">DOB : </label>&nbsp;
+                            <input type="date" name="password">
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="">Address : </label>&nbsp;
+                            <textarea></textarea>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="">State : </label>&nbsp;
+                            <input type="text" name="state">
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="">Email : </label>&nbsp;
+                            <input type="text" name="state">
+                        </div>
+                        <div style="height: 10px;"></div>
+
+                    </div>
+                </form>
+                <hr>
+                <div class="form-group loginfields">
+                    <button class="btn btn-disabled">Cancel</button>&nbsp;
+                    <button class="btn btn-primary">Register</button>
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>

@@ -7,16 +7,16 @@
  
   .innercard
   {
-    width: 300px;
+    width: 600px;
     height: auto;
-    margin-left:175px;
+    margin-left:75px;
     margin-top: 25px;
     margin-bottom: 25px;
   }
   .outercard
   {
-    width: 650px;
-    height:  auto;
+    width: 750px;
+    height: 500px;
     margin-left:300px;
     margin-top: 25px;
     margin-bottom: 25px;
@@ -25,7 +25,7 @@
   {
     margin-left: 25px;
   }
-  .validation-message
+  .alert
   {
     color: red;
   }

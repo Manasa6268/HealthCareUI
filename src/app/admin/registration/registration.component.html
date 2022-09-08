@@ -9,48 +9,239 @@
         <div style="height: 15px;"></div>
         <div class="cards-container">
             <div class="cards-form">
-                <form #form="ngForm" (ngSubmit)="onSubmit()">
+                <form class="form" #signup="ngForm" (ngSubmit)=" signup.form.valid && onSubmit()" novalidate
+                    [appMatchPassword]="['password', 'confirmpassword']">
                     <div class="loginfields">
-                        <div class=" form-group">
-                            <label for="">User Name : </label>&nbsp;
-                            <input type="text" name="title" id="title" required minlength="4" [(ngModel)]="username"
-                                #title="ngModel">
-                            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
-                                <div *ngIf="title.errors?.['required']">
-                                    Title is required.
-                                </div>
-                                <div *ngIf="title.errors?.['minlength']">
-                                    Title must be at least 4 characters long.
-                                </div>
+                        <div class="row form-group">
+                            <div class="col">
+                                <label style="padding-right: 56px;">User Name
+                                    :</label>
+                                <input type="text" #username="ngModel" [(ngModel)]="Member.UserName" name="username"
+                                    placeholder="UserName" id="username" minlength="5" required
+                                    [ngClass]="{'invalid-textbox' :signup.submitted && !username.valid  }"
+                                    matchusername>&nbsp;&nbsp;
+                                <span *ngIf="signup.submitted && username.invalid  ">
+                                    <label *ngIf="username.errors?.['required']" class="validation-message">User Name
+                                        is
+                                        required.</label>
+                                    <label *ngIf="username.errors?.['minlength']" class="validation-message">Enter
+                                        atleast 5
+                                        characters.</label>
+                                    <!-- <label *ngIf="username.errors?.['forbiddenName']">
+                                        Name cannot be Bob.
+                                    </label> -->
+                                    <label *ngIf="username.errors?.['matchusername']" class="validation-message">
+                                        User Name already exsits
+                                    </label>
+                                </span>
                             </div>
 
                         </div>
-                        <div style="height: 10px;"></div>
-                        <div class="form-group">
-                            <label for="">Password : </label>&nbsp;&nbsp;&nbsp;&nbsp;
-                            <input type="password" name="password">
+                        <div style="height: 10px;">
+                        </div>
+                        <div class="row form-group">
+                            <div class="col">
+                                <label style="padding-right: 52px;" for="">Password :
+                                </label>&ensp;&nbsp;
+                                <input type="password" #password="ngModel" [(ngModel)]="Member.Password" name="password"
+                                    placeholder="Password" required [pattern]="passwordpattern" maxlength="15"
+                                    minlength="8" [ngClass]="{'invalid-textbox' :signup.submitted && !password.valid }">
+                                <span *ngIf="signup.submitted && password.errors">
+                                    <label *ngIf="password.errors?.['required']" class="validation-message">Password is
+                                        required.</label>
+
+                                    <label *ngIf="password.errors?.['pattern']" class="validation-message">Password
+                                        length should be minimum 8 and maximum 15 characters.It should contain at least
+                                        1 uppercase letter, 1 lowercase
+                                        letter and 1 number
+                                    </label>
+                                </span>
+                            </div>
+                        </div>
+                        <div style="height: 10px;">
+                        </div>
+                        <div class="row form-group">
+                            <div class="col">
+                                <label for="">Confirm Password : </label>&nbsp;
+                                <input type="password" #confirmpassword="ngModel" [(ngModel)]="Member.confirmpassword"
+                                    name="confirmpassword" placeholder="Password" required [pattern]="passwordpattern"
+                                    maxlength="15" minlength="8"
+                                    [ngClass]="{'invalid-textbox' :signup.submitted && !confirmpassword.valid }">
+                                <span *ngIf="signup.submitted && confirmpassword.errors">
+                                    <label *ngIf="confirmpassword.errors?.['required']" class="validation-message">
+                                        Confirm Password
+                                        is
+                                        required.</label>
+
+                                    <label *ngIf="confirmpassword.errors?.['pattern']"
+                                        class="validation-message">Password
+                                        length should be minimum 8 and maximum 15 characters.It should contain at least
+                                        1 uppercase letter, 1 lowercase
+                                        letter and 1 number
+                                    </label>
+                                    <label *ngIf="confirmpassword.errors?.['matching']"
+                                        class="validation-message">Passwords does not match
+                                    </label>
+                                </span>
+                            </div>
                         </div>
                         <div style="height: 10px;"></div>
                         <div class="form-group">
-                            <label for="">User Type : </label>&nbsp;&nbsp;&nbsp;
-                            <select style="width: 190px;">
-                                <option>Admin</option>
-                                <option>Member</option>
+                            <label style="padding-right: 49px;" for="">User Type : </label>&ensp;&nbsp;
+                            <select #select="ngModel" style="width: 190px;" name="usertype" id="usertype"
+                                [(ngModel)]='Member.UserType' (change)="open(mymodal,Member.UserType)" required>
+                                <option value="Admin">Admin</option>
+                                <option value="Member">Member</option>
+
+
                             </select>
+                            <span *ngIf="signup.submitted && select.errors">
+                                <label *ngIf="select.errors?.['required']" class="validation-message">User Type
+                                    is required.</label>
+                            </span>
                         </div>
                         <div style="height: 10px;"></div>
 
                     </div>
+                    <hr>
+                    <div class="form-group registrationfields">
+                        <button class="btn btn-secondary" (click)="onreset(signup)">Reset</button>&nbsp;
+                        <button type="submit" class="btn btn-primary">Register</button>
+                    </div>
+                    <hr>
+                    <h5 class="loginfields">Already have an account?</h5>
+                    <div class="form-group loginfields">
+                        <button class="btn btn-primary" (click)="login()">SIGN IN</button>
+                    </div>
                 </form>
-                <hr>
-
-                <div class="form-group loginfields">
-                    <button class="btn btn-disabled">Cancel</button>&nbsp;
-                    <button class="btn btn-primary">Register</button>
-                </div>
-
             </div>
 
         </div>
     </div>
 </div>
+<ng-template #mymodal let-modal>
+    <div class="card membercard">
+        <div class="card-header heading">
+            <h4>HealthCare Member Portal</h4>
+
+        </div>
+        <div class="card shadow p-3 mb-5 bg-white rounded meminnercard">
+            <div class="card-header">
+                <h4>Member Registration</h4>
+            </div>
+            <div style="height: 15px;"></div>
+            <div class="cards-container">
+                <div class="cards-form">
+                    <form name="Member" #f="ngForm" (ngSubmit)=" f.form.valid && onDetailsSubmit()" novalidate>
+                        <div class="loginfields">
+                            <div class=" form-group">
+                                <div>
+                                    <label for="">Name : </label>&emsp;&nbsp;
+                                    <input type="text" #firstname="ngModel" [(ngModel)]="Member.FirstName"
+                                        name="firstname" placeholder="FirstName" minlength="4" required
+                                        [pattern]="namepattern"
+                                        [ngClass]="{'invalid-textbox' : f.submitted && !firstname.valid }">&nbsp;&nbsp;
+                                    <span *ngIf="f.submitted && firstname.errors">
+                                        <label *ngIf="firstname.errors?.['required']" class="validation-message">First
+                                            Name
+                                            is
+                                            required.</label>
+                                        <label *ngIf="firstname.errors?.['pattern']" class="validation-message">First
+                                            Name
+                                            length should be minimum 5 and maximum 20 characters.
+                                        </label>
+                                    </span>
+                                    <input type="text" #lastname="ngModel" [(ngModel)]="Member.LastName" name="lastname"
+                                        placeholder="LastName" minlength="5" required [pattern]="namepattern"
+                                        [ngClass]="{'invalid-textbox' : f.submitted && !lastname.valid }">&nbsp;&nbsp;
+                                    <span *ngIf="f.submitted && lastname.errors">
+                                        <label *ngIf="lastname.errors?.['required']" class="validation-message">Last
+                                            Name
+                                            is
+                                            required.</label>
+                                        <label *ngIf="lastname.errors?.['pattern']" class="validation-message">Last Name
+                                            length should be minimum 5 and maximum 20 characters.
+                                        </label>
+                                    </span>
+                                </div>
+                            </div>
+
+                            <div style="height: 10px;"></div>
+                            <div class="form-group">
+                                <label for="">DOB : </label>&emsp;&nbsp;&nbsp;&nbsp;
+                                <input type="date" [max]="today" [(ngModel)]="Member.DOB">
+                            </div>
+                            <div style="height: 10px;"></div>
+                            <div class="form-group">
+                                <label for="">Address : </label>&nbsp;
+                                <textarea #address="ngModel" [(ngModel)]="Member.Address" name="address"
+                                    placeholder="Address" maxlength="100" required
+                                    [ngClass]="{'invalid-textbox' : f.submitted && !address.valid }"></textarea>&nbsp;&nbsp;
+                                <span *ngIf="f.submitted && address.errors">
+                                    <label *ngIf="address.errors?.['required']" class="validation-message">Address
+                                        is
+                                        required.</label>
+                                    <label *ngIf="address.errors?.['maxlength']" class="validation-message">Address
+                                        length should not exceed 100 characters.
+                                    </label>
+                                </span>
+
+                            </div>
+                            <div style="height: 10px;"></div>
+                            <div class="form-group">
+                                <label for="">City : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="text" [(ngModel)]="Member.City" required placeholder="City" #city="ngModel"
+                                    name="city" [ngClass]="{'invalid-textbox' : f.submitted && !city.valid }">
+                                <span *ngIf="f.submitted && city.errors">
+                                    <label *ngIf="city.errors?.['required']" class="validation-message">City
+                                        is
+                                        required.</label>
+                                </span>
+                            </div>
+                            <div style="height: 10px;"></div>
+                            <label for="">State : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                            <select #select="ngModel" style="width: 190px;" name="state" id="state"
+                                [(ngModel)]='Member.State' required>
+                                <option *ngFor="let state of States" value={{state.id}}>{{state.state}}</option>
+
+                            </select>
+                            <span *ngIf="f.submitted && select.errors">
+                                <label *ngIf="select.errors?.['required']" class="validation-message">State
+                                    is required.</label>
+                            </span>
+                            <div style="height: 10px;"></div>
+                            <div class="form-group">
+                                <label for="">Email : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <input type="email" #email="ngModel" [(ngModel)]="Member.Email" name="email"
+                                    placeholder="Email" required [pattern]="emailpattern"
+                                    [ngClass]="{'invalid-textbox' :f.submitted && !email.valid }" matchemail>
+                                <span *ngIf="f.submitted && email.errors">
+                                    <label *ngIf="email.errors?.['required']" class="validation-message">Email is
+                                        required.</label>
+
+                                    <label *ngIf="email.errors?.['pattern']" class="validation-message">Enter Valid
+                                        Email
+                                    </label>
+                                    <label *ngIf="email.errors?.['matchemail']" class="validation-message">
+                                        Email already exsits
+                                    </label>
+                                </span>
+                            </div>
+                            <div style="height: 10px;"></div>
+
+                        </div>
+                        <hr>
+                        <div class="form-group loginfields">
+                            <button class="btn btn-disabled" (click)="modal.close('Save click')">Cancel</button>&nbsp;
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                        </div>
+                    </form>
+
+
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

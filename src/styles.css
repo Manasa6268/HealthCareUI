@@ -1,4 +1,6 @@
 @import "~bootstrap/dist/css/bootstrap.min.css";
 @import "~font-awesome/css/font-awesome.min.css";
-
+@import "~ngx-toastr/toastr.css";
 @import url(//fonts.googleapis.com/css?family=Open+Sans:400,300,600,700);
+
+

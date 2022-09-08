@@ -7,17 +7,30 @@
  
   .innercard
   {
-    width: 350px;
+    width: 450px;
     height: auto;
-    margin-left:150px;
+    margin-left:100px;
     margin-top: 25px;
     margin-bottom: 25px;
   }
   .outercard
   {
     width: 650px;
-    height: 400px;
+    height: auto;
     margin-left:300px;
+    margin-top: 25px;
+    margin-bottom: 25px;
+  }
+  .membercard
+  {
+    width: 650px;
+    height: auto;
+  }
+  .meminnercard
+  {
+    width: 600px;
+    height: auto;
+    margin-left:25px;
     margin-top: 25px;
     margin-bottom: 25px;
   }
@@ -25,7 +38,11 @@
   {
     margin-left: 25px;
   }
-  .alert
+  .validation-message
   {
     color: red;
+  }
+  .registrationfields
+  {
+    margin-left: 120px;
   }
