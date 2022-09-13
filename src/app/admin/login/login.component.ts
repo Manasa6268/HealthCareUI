@@ -46,13 +46,18 @@ export class LoginComponent implements OnInit {
             localStorage.setItem('token', this.token);
             this.tokenPayload = this.jwtHelper.decodeToken(this.token);
             this.UserId = this.tokenPayload.sub;
-            localStorage.setItem('userid', (this.UserId).toString())
+            localStorage.setItem('code', this.tokenPayload.Id);
+            localStorage.setItem('userid', (this.UserId).toString());
             localStorage.setItem('Name', this.cred.userName);
             this.role = this.tokenPayload.Role
             localStorage.setItem('role', this.tokenPayload.Role);
-            //this.router.navigate(['/homepage']);
             this.toaster.success(this.role + '  Login Successfull!')
-
+            if (this.role == "Admin") {
+              this.router.navigate(['/searchmember']);
+            }
+            if (this.role == "Member") {
+              this.router.navigate(['/memberdetails']);
+            }
           },
           error => {
             this.toaster.error('Login Failed! Please enter valid username and password')

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { url } from '../models/url.model';
-import { MemberDetails, States, UserCredentials, UserTypes } from '../models/admin.model';
+import { MemberDetails, MemberList, PhysicianAssign, PhysicianDetails, States, UserCredentials, UserTypes } from '../models/admin.model';
 @Injectable({ providedIn: 'root' })
 export class AdminService {
+
   public apiUrl: string;
   constructor(private http: HttpClient) {
     this.apiUrl = url;
@@ -17,20 +18,20 @@ export class AdminService {
       {
         "Id": 0,
         "Code": "",
-        "FirstName": member.FirstName,
-        "LastName": member.LastName,
-        "UserName": member.UserName,
-        "DOB": member.DOB,
-        "Address": member.Address,
-        "City": member.City,
-        "State": member.State,
-        "Email": member.Email,
-        "PhysicianName": member.PhysicianName,
-        "CreatedDate": member.CreatedDate,
-        "ModifiedDate": member.ModifiedDate,
+        "FirstName": member.firstName,
+        "LastName": member.lastName,
+        "UserName": member.userName,
+        "DOB": member.dob,
+        "Address": member.address,
+        "City": member.city,
+        "State": member.state,
+        "Email": member.email,
+        "PhysicianName": member.physicianName,
+        "CreatedDate": member.createdDate,
+        "ModifiedDate": member.modifiedDate,
         "ModifiedBy": "",
-        "Password": member.Password,
-        "UserType": member.UserType
+        "Password": member.password,
+        "UserType": member.userType
       },
 
 
@@ -48,5 +49,22 @@ export class AdminService {
   }
   GetEmails(): Observable<string[]> {
     return this.http.get<any>(`${this.apiUrl}/getmails`);
+  }
+  GetPhysicianNames(): Observable<PhysicianDetails[]> {
+    return this.http.get<any>(`${this.apiUrl}/physiciannames`);
+  }
+  GetMembers(MemberId: string, FirstName: string, LastName: string, PhysicianName: string, ClaimId: string): Observable<MemberList[]> {
+    return this.http.get<MemberList[]>(this.apiUrl + '/admin/getmembers?MemberId=' + MemberId + '&FirstName=' + FirstName + '&LastName=' + LastName + '&PhysicianName=' + PhysicianName + '&ClaimId=' + ClaimId,
+      {
+        headers: new HttpHeaders(
+          {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+          })
+      });
+  }
+
+  AssignPhysician(physician: PhysicianAssign): Observable<string> {
+    return this.http.post<any>(`${this.apiUrl}/admin/assignphysician`, { memberId: physician.memberId, physicianName: physician.physicianName, adminId: physician.adminId });
   }
 }

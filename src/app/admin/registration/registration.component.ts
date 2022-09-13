@@ -20,30 +20,29 @@ export class RegistrationComponent implements OnInit {
   passwordpattern: string = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,15}$";
   namepattern: string = "^(?=.*?[A-Z])(?=.*?[a-z]).{5,20}$";
   emailpattern: string = '^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$';
-
   closeResult: string = "";
   Members: MemberDetails[] = [];
   States: States[] = []
   UserTypes: UserTypes[] = [];
-  passwordA: string = ''
+
   Member: MemberDetails = {
-    Id: 0,
-    Code: '',
-    FirstName: '',
-    LastName: '',
-    UserName: '',
-    Password: '',
+    id: 0,
+    code: '',
+    firstName: '',
+    lastName: '',
+    userName: '',
+    password: '',
     confirmpassword: '',
-    UserType: '',
-    DOB: new Date(),
-    Address: '',
-    City: '',
-    State: '',
-    Email: '',
-    PhysicianName: '',
-    CreatedDate: new Date(),
-    ModifiedDate: new Date(),
-    ModifiedBy: ''
+    userType: '',
+    dob: new Date(),
+    address: '',
+    city: '',
+    state: '',
+    email: '',
+    physicianName: '',
+    createdDate: new Date(),
+    modifiedDate: new Date(),
+    modifiedBy: ''
   }
   today = this.datepipe.transform(new Date(), "yyyy-MM-dd")
 
@@ -80,6 +79,7 @@ export class RegistrationComponent implements OnInit {
   onDetailsSubmit() {
 
     this.toaster.success("Details Submitted Successfully")
+    this.modalService.dismissAll();
 
   }
   login() {

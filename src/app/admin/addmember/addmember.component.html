@@ -1,67 +1,154 @@
-<div class="card outercard">
+<div class="card membercard">
     <div class="card-header heading">
         <h4>HealthCare Member Portal</h4>
+
     </div>
-    <div class="card shadow p-3 mb-5 bg-white rounded innercard">
+    <div class="card shadow p-3 mb-5 bg-white rounded meminnercard">
         <div class="card-header">
-            <h4>Member Registration</h4>
+            <h4>Add New Member</h4>
         </div>
         <div style="height: 15px;"></div>
         <div class="cards-container">
             <div class="cards-form">
-                <form #form="ngForm" (ngSubmit)="onSubmit()">
+                <form name="Member" #f="ngForm" (ngSubmit)=" f.form.valid && onDetailsSubmit()" novalidate>
                     <div class="loginfields">
                         <div class=" form-group">
                             <div>
-                                <label for="">Name : </label>&emsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" name="title" id="title" required minlength="4" [(ngModel)]="username"
-                                    #title="ngModel">&nbsp;
-                                <input type="text" name="lastname">
+                                <label for="" style="padding-right: 51px;">Name : </label>
+                                <input type="text" #firstname="ngModel" [(ngModel)]="Member.firstName" name="firstname"
+                                    placeholder="FirstName" minlength="4" required [pattern]="namepattern"
+                                    [ngClass]="{'invalid-textbox' : f.submitted && !firstname.valid }"
+                                    [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;
+                                <span *ngIf="f.submitted && firstname.errors">
+                                    <label *ngIf="firstname.errors?.['required']" class="validation-message">First
+                                        Name
+                                        is
+                                        required.</label>
+                                    <label *ngIf="firstname.errors?.['pattern']" class="validation-message">First
+                                        Name
+                                        length should be minimum 5 and maximum 20 characters.
+                                    </label>
+                                </span>
+                                <input type="text" #lastname="ngModel" [(ngModel)]="Member.lastName" name="lastname"
+                                    placeholder="LastName" minlength="5" required [pattern]="namepattern"
+                                    [ngClass]="{'invalid-textbox' : f.submitted && !lastname.valid }"
+                                    [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;
+                                <span *ngIf="f.submitted && lastname.errors">
+                                    <label *ngIf="lastname.errors?.['required']" class="validation-message">Last
+                                        Name
+                                        is
+                                        required.</label>
+                                    <label *ngIf="lastname.errors?.['pattern']" class="validation-message">Last Name
+                                        length should be minimum 5 and maximum 20 characters.
+                                    </label>
+                                </span>
                             </div>
-                            <div *ngIf="title.invalid && (title.dirty || title.touched)" class="alert">
-                                <div *ngIf="title.errors?.['required']">
-                                    Title is required.
-                                </div>
-                                <div *ngIf="title.errors?.['minlength']">
-                                    Title must be at least 4 characters long.
-                                </div>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="row form-group">
+                            <div class="col">
+                                <label style="padding-right:15px;">User Name
+                                    :</label>
+                                <input type="text" #username="ngModel" [(ngModel)]="Member.userName" name="username"
+                                    placeholder="UserName" id="username" minlength="5" required
+                                    [ngClass]="{'invalid-textbox' :f.submitted && !username.valid  }" matchusername
+                                    [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;
+                                <span *ngIf="f.submitted && username.invalid  ">
+                                    <label *ngIf="username.errors?.['required']" class="validation-message">User Name
+                                        is
+                                        required.</label>
+                                    <label *ngIf="username.errors?.['minlength']" class="validation-message">Enter
+                                        atleast 5
+                                        characters.</label>
+                                    <!-- <label *ngIf="username.errors?.['forbiddenName']">
+                                        Name cannot be Bob.
+                                    </label> -->
+                                    <label *ngIf="username.errors?.['matchusername']" class="validation-message">
+                                        User Name already exsits
+                                    </label>
+                                </span>
                             </div>
+
+                        </div>
+
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="" style="padding-right: 60px;">DOB : </label>
+                            <input type="date" style="width: 190px;" [max]="today" [(ngModel)]="Member.dob"
+                                [ngModelOptions]="{standalone: true}">
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="" style="padding-right: 36px;">Address : </label>
+                            <textarea #address="ngModel" [(ngModel)]="Member.address" name="address"
+                                placeholder="Address" maxlength="100" required style="width: 188px;"
+                                [ngClass]="{'invalid-textbox' : f.submitted && !address.valid }"
+                                [ngModelOptions]="{standalone: true}"></textarea>&nbsp;&nbsp;
+                            <span *ngIf="f.submitted && address.errors">
+                                <label *ngIf="address.errors?.['required']" class="validation-message">Address
+                                    is
+                                    required.</label>
+                                <label *ngIf="address.errors?.['maxlength']" class="validation-message">Address
+                                    length should not exceed 100 characters.
+                                </label>
+                            </span>
 
                         </div>
                         <div style="height: 10px;"></div>
                         <div class="form-group">
-                            <label for="">User Name : </label>&nbsp;
-                            <input type="text" name="password">
+                            <label for="" style="padding-right: 64px;">City : </label>
+                            <input type="text" [(ngModel)]="Member.city" required placeholder="City" #city="ngModel"
+                                name="city" [ngClass]="{'invalid-textbox' : f.submitted && !city.valid }"
+                                [ngModelOptions]="{standalone: true}">
+                            <span *ngIf="f.submitted && city.errors"> &nbsp;
+                                <label *ngIf="city.errors?.['required']" class="validation-message">City
+                                    is
+                                    required.</label>
+                            </span>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <label for="" style="padding-right:56px;">State : </label>
+                        <select name="country" style="width: 190px;" [(ngModel)]="Member.state" #country="ngModel"
+                            [ngClass]="{'invalid-data': country.invalid && f.submitted, 'valid-data': country.valid && f.submitted}"
+                            required>
+                            <option [ngValue]="null" selected>---Select---</option>
+                            <option *ngFor="let item of States" [value]="item.state">
+                                {{item.state}}
+                            </option>
+                        </select>
+                        <div *ngIf="country.invalid && f.submitted">
+                            <span style="color: red;">State is required</span>
                         </div>
                         <div style="height: 10px;"></div>
                         <div class="form-group">
-                            <label for="">DOB : </label>&nbsp;
-                            <input type="date" name="password">
-                        </div>
-                        <div style="height: 10px;"></div>
-                        <div class="form-group">
-                            <label for="">Address : </label>&nbsp;
-                            <textarea></textarea>
-                        </div>
-                        <div style="height: 10px;"></div>
-                        <div class="form-group">
-                            <label for="">State : </label>&nbsp;
-                            <input type="text" name="state">
-                        </div>
-                        <div style="height: 10px;"></div>
-                        <div class="form-group">
-                            <label for="">Email : </label>&nbsp;
-                            <input type="text" name="state">
+                            <label for="" style="padding-right: 54px;">Email : </label>
+                            <input type="email" #email="ngModel" [(ngModel)]="Member.email" name="email"
+                                placeholder="Email" required [pattern]="emailpattern"
+                                [ngModelOptions]="{standalone: true}"
+                                [ngClass]="{'invalid-textbox' :f.submitted && !email.valid }" matchemail>&nbsp;
+                            <span *ngIf="f.submitted && email.errors">
+                                <label *ngIf="email.errors?.['required']" class="validation-message">Email is
+                                    required.</label>
+
+                                <label *ngIf="email.errors?.['pattern']" class="validation-message">Enter Valid
+                                    Email
+                                </label>
+                                <label *ngIf="email.errors?.['matchemail']" class="validation-message">
+                                    Email already exsits
+                                </label>
+                            </span>
                         </div>
                         <div style="height: 10px;"></div>
 
                     </div>
+                    <hr>
+                    <div class="form-group loginfields">
+                        <button class="btn btn-disabled" (click)="searchmember()">Cancel</button>&nbsp;
+                        <button type="submit" data-dismiss="modal" class="btn btn-primary">Save</button>
+                    </div>
                 </form>
-                <hr>
-                <div class="form-group loginfields">
-                    <button class="btn btn-disabled">Cancel</button>&nbsp;
-                    <button class="btn btn-primary">Register</button>
-                </div>
+
+
 
             </div>
 

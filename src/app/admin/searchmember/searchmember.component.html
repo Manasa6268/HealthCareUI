@@ -1,0 +1,199 @@
+<div class="card outercard">
+    <div class="card-header heading">
+        <div class="row">
+            <h4 style="width: 500px; margin-left: 100px;">HealthCare Member Portal</h4>
+            <button class=" btn btn-danger" (click)="logout()" style="width: 80px;margin-left: 283px;">Logout</button>
+        </div>
+
+    </div>
+    <div class="card shadow p-3 mb-5 bg-white rounded innercard">
+        <div class=" card-header">
+            <div class="row">
+                <h4 class="col">Member Search</h4>
+                <button class="col" style="width: 150px;" class="btn btn-primary" (click)="addmember()"> Add Member
+                </button>&nbsp;
+            </div>
+        </div>
+        <div style="height: 15px;"></div>
+        <div class="cards-container">
+            <div class="cards-form">
+                <form name="Member" #f="ngForm">
+                    <div class="loginfields">
+                        <div class="form-group">
+                            <div>
+                                <label for="" style="padding-right: 68px;">MemberId: </label>
+                                <input type="text" #memberId="ngModel" [(ngModel)]="memberid" name="memberId"
+                                    placeholder="MemberId" minlength="4" required
+                                    [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;
+
+                            </div>
+                        </div>
+
+                        <div style="height: 10px;"></div>
+                        <div class=" form-group">
+                            <div>
+                                <label for="" style="padding-right: 97px;">Name : </label>
+                                <input type="text" #firstname="ngModel" [(ngModel)]="firstName" name="firstname"
+                                    placeholder="FirstName" minlength="4" required
+                                    [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;
+
+                                <input type="text" #lastname="ngModel" [(ngModel)]="lastName" name="lastname"
+                                    placeholder="LastName" [ngModelOptions]="{standalone: true}">&nbsp;&nbsp;
+
+
+                            </div>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label style="padding-right: 16px;" for="">Physician Name: </label>&ensp;&nbsp;
+                            <select #select="ngModel" style="width: 190px;" [ngModelOptions]="{standalone: true}"
+                                name="PhysicianName" id="PhysicianName" [(ngModel)]='PhysicianName' required>
+
+                                <option *ngFor="let physicians of physician" value={{physicians.physicianName}}>
+                                    {{physicians.physicianName}}
+                                </option>
+
+
+                            </select>
+
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="" style="padding-right: 82px;">Claim Id : </label>
+                            <input type="text" style="width: 190px;" [ngModelOptions]="{standalone: true}"
+                                [(ngModel)]="ClaimId">
+
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="buttons">
+                            <button type="reset" class="btn btn-secondary" (click)="onreset(f)"> Clear </button>&nbsp;
+                            <button class="btn btn-primary" (click)="getMemberDetails()">Search</button>
+                        </div>
+                    </div>
+
+
+                </form>
+
+                <hr>
+                <h4 [hidden]="headerhide">No Members Found</h4>
+                <div [hidden]="tblhide">
+                    <h4>Member Details</h4>
+                    <table class="table table-bordered" *ngIf="MemberList.length">
+                        <thead>
+                            <tr>
+                                <th>Member Id</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Assigned Physician</th>
+                                <th>Claim Id</th>
+                                <th>Claim Amount</th>
+                                <th>Submitted Date</th>
+                                <th>Select Member</th>
+
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let Member of MemberList| paginate : { itemsPerPage: tableSize, currentPage:
+                                page, totalItems: count }; let i=index">
+                                <td>{{ Member.memberId}}</td>
+                                <td>{{Member.firstName}}</td>
+                                <td>{{ Member.lastName}}</td>
+                                <td>{{Member.physicianName}} <i [hidden]="Member.hasphysician"
+                                        (click)="open(mymodal,Member.memberId)" class="col fa fa-edit fa-2x"
+                                        style="color: green;" aria-hidden="true"></i></td>
+                                <td>{{ Member.claimId}}</td>
+                                <td>{{ Member.claimAmount}}</td>
+                                <td>{{ Member.claimDate|date:'MM/dd/yyyy'}}</td>
+                                <td>
+                                    <input class="form-check-input" [hidden]="Member.hasclaim"
+                                        (change)="onChange(Member.memberId, $event)" type="checkbox"
+                                        style="width: 25px;height: 25px;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="row">
+                        <div class="col d-flex justify-content-center">
+                            <pagination-controls previousLabel="Prev" nextLabel="Next"
+                                (pageChange)="onTableDataChange($event)">
+                            </pagination-controls>
+                        </div>
+                        <button class=" btn btn-primary" style="width: 150px;" (click)="onsubmitclaim()">Submit
+                            Claim</button>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+<ng-template #mymodal let-modal>
+    <div class="card membercard">
+        <div class="card-header heading">
+            <h4>HealthCare Member Portal</h4>
+        </div>
+        <div class="card shadow p-3 mb-5 bg-white rounded meminnercard">
+            <div class=" card-header">
+                <div class="row">
+                    <h4 class="col">Assign Physician</h4>
+
+                </div>
+            </div>
+            <div style="height: 15px;"></div>
+            <div class="cards-container">
+                <div class="cards-form">
+                    <form name="Member" #f="ngForm" (ngSubmit)=" f.form.valid && AssignPhysician() " novalidate>
+                        <div class="loginfields">
+                            <div class="form-group">
+                                <div>
+                                    <label for="" style="padding-right: 68px;">MemberId: </label>
+                                    <input [(ngModel)]="physicians.memberId" readonly
+                                        [ngModelOptions]="{standalone: true}" name="myname">&nbsp;&nbsp;
+                                </div>
+                            </div>
+
+
+
+                            <div style=" height: 10px;">
+                            </div>
+                            <div class="form-group">
+                                <label style="padding-right: 16px;" for="">Physician Name: </label>&ensp;&nbsp;
+                                <br>
+                                <select name="country" style="width: 185px;" [(ngModel)]="physicians.physicianName"
+                                    #country="ngModel"
+                                    [ngClass]="{'invalid-data': country.invalid && f.submitted, 'valid-data': country.valid && f.submitted}"
+                                    required>
+                                    <option [ngValue]="null" selected>---Select---</option>
+                                    <option *ngFor="let item of physician" [value]="item.physicianName">
+                                        {{item.physicianName}}
+                                    </option>
+                                </select>
+
+                                <div *ngIf="country.invalid && f.submitted">
+                                    <span style="color: red;">Please Select Physician Name.</span>
+                                </div>
+                            </div>
+                            <div style="height: 10px;"></div>
+
+                            <div class="buttons">
+                                <button class="btn btn-secondary" (click)="modal.close('Save click')"> Cancel
+                                </button>&nbsp;
+                                <button type="submit" class="btn btn-primary" (click)="AssignPhysician()">Save</button>
+                            </div>
+                        </div>
+
+
+                    </form>
+
+                    <hr>
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</ng-template>

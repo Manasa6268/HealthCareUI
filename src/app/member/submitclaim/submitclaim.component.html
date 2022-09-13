@@ -1,0 +1,97 @@
+<div class="card membercard">
+    <div class="card-header heading">
+        <h4>HealthCare Member Portal</h4>
+
+    </div>
+    <div class="card shadow p-3 mb-5 bg-white rounded meminnercard">
+        <div class="card-header">
+            <h4>Claim Submission</h4>
+        </div>
+        <div style="height: 15px;"></div>
+        <div class="cards-container">
+            <div class="cards-form">
+                <form name="Member" #f="ngForm" (ngSubmit)=" f.form.valid && onSubmit()" novalidate>
+                    <div class="loginfields">
+                        <div class="form-group" style="padding-left: 51px;">
+                            <div>
+                                <label for="" style="padding-right: 15px;">MemberId: </label>
+                                <label for="" [hidden]="memberhide">{{ MemberId }} </label>
+                                <label for="" [hidden]="membershide">{{ MemberIds }} </label>
+
+                            </div>
+                        </div>
+
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label style="padding-right: 21px;" for="">Claim Type : </label>&ensp;&nbsp;
+                            <select #select="ngModel" style="width: 190px;" [ngModelOptions]="{standalone: true}"
+                                name="claimtype" id="claimtype" [(ngModel)]='Claim.claimType' required>
+                                <option value="Vision">Vision</option>
+                                <option value="Dental">Dental</option>
+                                <option value="Medical">Medical</option>
+
+
+                            </select>
+                            <span *ngIf="f.submitted && select.errors">
+                                <label *ngIf="select.errors?.['required']" class="validation-message">Claim Type
+                                    is required.</label>
+                            </span>
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="" style="padding-right: 15px;">Claim Amount : </label>
+                            <input type="number" #claimAmount="ngModel" [(ngModel)]="Claim.claimAmount"
+                                [ngModelOptions]="{standalone: true}" name="claimAmount" placeholder="ClaimAmount"
+                                required [ngClass]="{'invalid-textbox' :f.submitted && !claimAmount.valid}"
+                                [pattern]="numberpattern">
+                            <span *ngIf="f.submitted && claimAmount.errors">
+                                <label *ngIf="claimAmount.errors?.['required']" class="validation-message">Claim Amount
+                                    is
+                                    required.</label>
+                                <label *ngIf="claimAmount.errors?.['pattern']" class="validation-message">Claim Amount
+                                    should be greater than zero
+                                </label>
+
+
+                            </span>
+
+                        </div>
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="" style="padding-right: 38px;">Claim Date : </label>
+                            <input type="date" style="width: 190px;" [ngModelOptions]="{standalone: true}" [min]="today"
+                                [(ngModel)]="Claim.claimDate">
+                        </div>
+
+                        <div style="height: 10px;"></div>
+                        <div class="form-group">
+                            <label for="" style="padding-right: 56px;">Remarks : </label>
+                            <textarea #remarks="ngModel" [(ngModel)]="Claim.remarks" name="remarks"
+                                placeholder="remarks" maxlength="1000" [ngModelOptions]="{standalone: true}" required
+                                style="width: 188px;"
+                                [ngClass]="{'invalid-textbox' : f.submitted && !remarks.valid }"></textarea>&nbsp;&nbsp;
+                            <span *ngIf="f.submitted && remarks.errors">
+                                <label *ngIf="remarks.errors?.['required']" class="validation-message">remarks
+                                    is
+                                    required.</label>
+                                <label *ngIf="remarks.errors?.['maxlength']" class="validation-message">remarks
+                                    length should not exceed 1000 characters.
+                                </label>
+                            </span>
+
+                        </div>
+                        <div style="height: 10px;"></div>
+                    </div>
+                    <hr>
+                    <button class="btn btn-secondary" (click)="oncancel()">Cancel</button>&nbsp;
+                    <button type="submit" class="btn btn-primary">Submit</button>
+
+                </form>
+
+
+
+            </div>
+
+        </div>
+    </div>
+</div>

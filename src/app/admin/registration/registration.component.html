@@ -16,7 +16,7 @@
                             <div class="col">
                                 <label style="padding-right: 56px;">User Name
                                     :</label>
-                                <input type="text" #username="ngModel" [(ngModel)]="Member.UserName" name="username"
+                                <input type="text" #username="ngModel" [(ngModel)]="Member.userName" name="username"
                                     placeholder="UserName" id="username" minlength="5" required
                                     [ngClass]="{'invalid-textbox' :signup.submitted && !username.valid  }"
                                     matchusername>&nbsp;&nbsp;
@@ -43,7 +43,7 @@
                             <div class="col">
                                 <label style="padding-right: 52px;" for="">Password :
                                 </label>&ensp;&nbsp;
-                                <input type="password" #password="ngModel" [(ngModel)]="Member.Password" name="password"
+                                <input type="password" #password="ngModel" [(ngModel)]="Member.password" name="password"
                                     placeholder="Password" required [pattern]="passwordpattern" maxlength="15"
                                     minlength="8" [ngClass]="{'invalid-textbox' :signup.submitted && !password.valid }">
                                 <span *ngIf="signup.submitted && password.errors">
@@ -89,7 +89,7 @@
                         <div class="form-group">
                             <label style="padding-right: 49px;" for="">User Type : </label>&ensp;&nbsp;
                             <select #select="ngModel" style="width: 190px;" name="usertype" id="usertype"
-                                [(ngModel)]='Member.UserType' (change)="open(mymodal,Member.UserType)" required>
+                                [(ngModel)]='Member.userType' (change)="open(mymodal,Member.userType)" required>
                                 <option value="Admin">Admin</option>
                                 <option value="Member">Member</option>
 
@@ -136,10 +136,10 @@
                         <div class="loginfields">
                             <div class=" form-group">
                                 <div>
-                                    <label for="">Name : </label>&emsp;&nbsp;
-                                    <input type="text" #firstname="ngModel" [(ngModel)]="Member.FirstName"
-                                        name="firstname" placeholder="FirstName" minlength="4" required
-                                        [pattern]="namepattern"
+                                    <label for="" style="padding-right: 25px;">Name : </label>
+                                    <input type="text" #firstname="ngModel" [(ngModel)]="Member.firstName"
+                                        name="firstname" placeholder="FirstName" [ngModelOptions]="{standalone: true}"
+                                        minlength="4" required [pattern]="namepattern"
                                         [ngClass]="{'invalid-textbox' : f.submitted && !firstname.valid }">&nbsp;&nbsp;
                                     <span *ngIf="f.submitted && firstname.errors">
                                         <label *ngIf="firstname.errors?.['required']" class="validation-message">First
@@ -151,8 +151,9 @@
                                             length should be minimum 5 and maximum 20 characters.
                                         </label>
                                     </span>
-                                    <input type="text" #lastname="ngModel" [(ngModel)]="Member.LastName" name="lastname"
-                                        placeholder="LastName" minlength="5" required [pattern]="namepattern"
+                                    <input type="text" #lastname="ngModel" [(ngModel)]="Member.lastName" name="lastname"
+                                        placeholder="LastName" minlength="5" [ngModelOptions]="{standalone: true}"
+                                        required [pattern]="namepattern"
                                         [ngClass]="{'invalid-textbox' : f.submitted && !lastname.valid }">&nbsp;&nbsp;
                                     <span *ngIf="f.submitted && lastname.errors">
                                         <label *ngIf="lastname.errors?.['required']" class="validation-message">Last
@@ -168,14 +169,16 @@
 
                             <div style="height: 10px;"></div>
                             <div class="form-group">
-                                <label for="">DOB : </label>&emsp;&nbsp;&nbsp;&nbsp;
-                                <input type="date" [max]="today" [(ngModel)]="Member.DOB">
+                                <label for="" style="padding-right: 37px;">DOB : </label>
+                                <input type="date" style="width: 190px;" [max]="today"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="Member.dob">
                             </div>
                             <div style="height: 10px;"></div>
                             <div class="form-group">
-                                <label for="">Address : </label>&nbsp;
-                                <textarea #address="ngModel" [(ngModel)]="Member.Address" name="address"
-                                    placeholder="Address" maxlength="100" required
+                                <label for="" style="padding-right: 15px;">Address : </label>
+                                <textarea #address="ngModel" [(ngModel)]="Member.address" name="address"
+                                    placeholder="Address" maxlength="100" [ngModelOptions]="{standalone: true}" required
+                                    style="width: 188px;"
                                     [ngClass]="{'invalid-textbox' : f.submitted && !address.valid }"></textarea>&nbsp;&nbsp;
                                 <span *ngIf="f.submitted && address.errors">
                                     <label *ngIf="address.errors?.['required']" class="validation-message">Address
@@ -189,9 +192,10 @@
                             </div>
                             <div style="height: 10px;"></div>
                             <div class="form-group">
-                                <label for="">City : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="text" [(ngModel)]="Member.City" required placeholder="City" #city="ngModel"
-                                    name="city" [ngClass]="{'invalid-textbox' : f.submitted && !city.valid }">
+                                <label for="" style="padding-right: 44px;">City : </label>
+                                <input type="text" [(ngModel)]="Member.city" [ngModelOptions]="{standalone: true}"
+                                    required placeholder="City" #city="ngModel" name="city"
+                                    [ngClass]="{'invalid-textbox' : f.submitted && !city.valid }">
                                 <span *ngIf="f.submitted && city.errors">
                                     <label *ngIf="city.errors?.['required']" class="validation-message">City
                                         is
@@ -199,21 +203,25 @@
                                 </span>
                             </div>
                             <div style="height: 10px;"></div>
-                            <label for="">State : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                            <select #select="ngModel" style="width: 190px;" name="state" id="state"
-                                [(ngModel)]='Member.State' required>
-                                <option *ngFor="let state of States" value={{state.id}}>{{state.state}}</option>
-
+                            <label for="" style="padding-right:33px;">State : </label>
+                            <select name="country" style="width: 190px;" [(ngModel)]="Member.state" #country="ngModel"
+                                [ngClass]="{'invalid-data': country.invalid && f.submitted, 'valid-data': country.valid && f.submitted}"
+                                required>
+                                <option [ngValue]="null" selected>---Select---</option>
+                                <option *ngFor="let item of States" [value]="item.state">
+                                    {{item.state}}
+                                </option>
                             </select>
-                            <span *ngIf="f.submitted && select.errors">
-                                <label *ngIf="select.errors?.['required']" class="validation-message">State
-                                    is required.</label>
-                            </span>
+
+                            <div *ngIf="country.invalid && f.submitted">
+                                <span style="color: red;">State is required</span>
+                            </div>
                             <div style="height: 10px;"></div>
                             <div class="form-group">
-                                <label for="">Email : </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <input type="email" #email="ngModel" [(ngModel)]="Member.Email" name="email"
-                                    placeholder="Email" required [pattern]="emailpattern"
+                                <label for="" style="padding-right: 30px;">Email : </label>
+                                <input type="email" #email="ngModel" [(ngModel)]="Member.email"
+                                    [ngModelOptions]="{standalone: true}" name="email" placeholder="Email" required
+                                    [pattern]="emailpattern"
                                     [ngClass]="{'invalid-textbox' :f.submitted && !email.valid }" matchemail>
                                 <span *ngIf="f.submitted && email.errors">
                                     <label *ngIf="email.errors?.['required']" class="validation-message">Email is
@@ -233,7 +241,7 @@
                         <hr>
                         <div class="form-group loginfields">
                             <button class="btn btn-disabled" (click)="modal.close('Save click')">Cancel</button>&nbsp;
-                            <button type="submit" class="btn btn-primary">Submit</button>
+                            <button type="submit" data-dismiss="modal" class="btn btn-primary">Submit</button>
                         </div>
                     </form>
 

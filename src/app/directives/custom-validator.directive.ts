@@ -1,6 +1,6 @@
 import { Directive } from '@angular/core';
 import { NG_VALIDATORS, AbstractControl, ValidatorFn, Validator, FormControl } from '@angular/forms';
-import { AdminService } from './services/admin.service';
+import { AdminService } from '../services/admin.service';
 // validation function
 
 function validateJuriNameFactory(adminService: AdminService, username: string[]): ValidatorFn {

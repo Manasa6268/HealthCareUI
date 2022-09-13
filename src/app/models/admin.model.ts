@@ -1,21 +1,22 @@
 export interface MemberDetails {
-    Id: number;
-    Code: string;
-    FirstName: string;
-    LastName: string;
-    UserName: string;
-    Password: string;
+    id: number;
+    code: string;
+    firstName: string;
+    lastName: string;
+    userName: string;
+    password: string;
     confirmpassword: string;
-    UserType: string;
-    DOB: Date;
-    Address: string;
-    City: string;
-    State: string;
-    Email: string;
-    PhysicianName: string;
-    CreatedDate: Date;
-    ModifiedDate: Date;
-    ModifiedBy: string;
+    userType: string;
+    dob: Date;
+    address: string;
+    city: string;
+    state: string;
+    email: string;
+    physicianName: string;
+    createdDate: Date;
+    modifiedDate: Date;
+    modifiedBy: string;
+
 }
 export interface UserCredentials {
     userName: string;
@@ -28,4 +29,26 @@ export interface States {
 export interface UserTypes {
     id: string;
     userType: string;
+}
+export interface PhysicianDetails {
+    id: string;
+    physicianName: string;
+    physicianState: string;
+}
+export interface PhysicianAssign {
+    memberId: string;
+    physicianName: string | null;
+    adminId: string | null;
+}
+export interface MemberList {
+
+    memberId: string;
+    firstName: string;
+    lastName: string;
+    physicianName: string;
+    claimId: string;
+    claimAmount: number;
+    claimDate: Date;
+    hasclaim: boolean;
+    hasphysician: boolean;
 }
