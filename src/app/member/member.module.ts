@@ -6,6 +6,7 @@ import { CustomValidatorDirective } from '../directives/custom-validator.directi
 import { EmailValidatorDirective } from '../directives/email-validator.directive';
 import { SubmitclaimComponent } from './submitclaim/submitclaim.component';
 import { MemberdetailsComponent } from './memberdetails/memberdetails.component';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
     declarations: [
         SubmitclaimComponent,
@@ -15,6 +16,7 @@ import { MemberdetailsComponent } from './memberdetails/memberdetails.component'
         CommonModule,
         ReactiveFormsModule,
         FormsModule,
+        HttpClientModule,
     ]
 })
 export class MemberModule { }

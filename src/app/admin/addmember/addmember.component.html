@@ -107,17 +107,18 @@
                             </span>
                         </div>
                         <div style="height: 10px;"></div>
-                        <label for="" style="padding-right:56px;">State : </label>
-                        <select name="country" style="width: 190px;" [(ngModel)]="Member.state" #country="ngModel"
-                            [ngClass]="{'invalid-data': country.invalid && f.submitted, 'valid-data': country.valid && f.submitted}"
-                            required>
-                            <option [ngValue]="null" selected>---Select---</option>
-                            <option *ngFor="let item of States" [value]="item.state">
-                                {{item.state}}
-                            </option>
-                        </select>
-                        <div *ngIf="country.invalid && f.submitted">
-                            <span style="color: red;">State is required</span>
+                        <div class="form-group">
+                            <label for="" style="padding-right:52px;">State : </label>
+                            <select name="country" style="width: 190px;" [(ngModel)]="Member.state" #country="ngModel"
+                                [ngClass]="{'invalid-data': country.invalid && ! f.submitted}" required>
+                                <option *ngFor="let item of States" [value]="item.state">
+                                    {{item.state}}
+                                </option>
+                            </select>
+
+                            <div *ngIf="country.invalid && f.submitted">
+                                <span style="color: red;">State is required</span>
+                            </div>
                         </div>
                         <div style="height: 10px;"></div>
                         <div class="form-group">

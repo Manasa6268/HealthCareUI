@@ -11,8 +11,10 @@ export class AdminService {
     this.apiUrl = url;
   }
   login(cred: UserCredentials): Observable<string> {
-    return this.http.post<any>(`${this.apiUrl}/api/GetToken`, { userName: cred.userName, password: cred.password });
+
+    return this.http.post<any>(`${this.apiUrl}/auth/gettoken`, { userName: cred.userName, password: cred.password });
   }
+
   Signup(member: MemberDetails): Observable<string> {
     return this.http.post<any>(`${this.apiUrl}/admin/signup`,
       {
@@ -38,23 +40,29 @@ export class AdminService {
 
     );
   }
+
   GetStates(): Observable<States[]> {
-    return this.http.get<any>(`${this.apiUrl}/states`);
+    return this.http.get<any>(`${this.apiUrl}/admin/states`);
   }
+
   GetUserTypes(): Observable<UserTypes[]> {
-    return this.http.get<any>(`${this.apiUrl}/usertypes`);
+    return this.http.get<any>(`${this.apiUrl}/admin/usertypes`);
   }
+
   GetUserNames(): Observable<string[]> {
-    return this.http.get<any>(`${this.apiUrl}/usernames`);
+    return this.http.get<any>(`${this.apiUrl}/admin/usernames`);
   }
+
   GetEmails(): Observable<string[]> {
-    return this.http.get<any>(`${this.apiUrl}/getmails`);
+    return this.http.get<any>(`${this.apiUrl}/admin/mails`);
   }
+
   GetPhysicianNames(): Observable<PhysicianDetails[]> {
-    return this.http.get<any>(`${this.apiUrl}/physiciannames`);
+    return this.http.get<any>(`${this.apiUrl}/admin/phyisiciannames`);
   }
+  //this.apiUrl + '/admin/getmembers?
   GetMembers(MemberId: string, FirstName: string, LastName: string, PhysicianName: string, ClaimId: string): Observable<MemberList[]> {
-    return this.http.get<MemberList[]>(this.apiUrl + '/admin/getmembers?MemberId=' + MemberId + '&FirstName=' + FirstName + '&LastName=' + LastName + '&PhysicianName=' + PhysicianName + '&ClaimId=' + ClaimId,
+    return this.http.get<MemberList[]>(this.apiUrl + '/admin/GetMemberDetails?MemberId=' + MemberId + '&FirstName=' + FirstName + '&LastName=' + LastName + '&PhysicianName=' + PhysicianName + '&ClaimId=' + ClaimId,
       {
         headers: new HttpHeaders(
           {
@@ -63,8 +71,15 @@ export class AdminService {
           })
       });
   }
-
+  //`${this.apiUrl}/admin/assignphysician`
   AssignPhysician(physician: PhysicianAssign): Observable<string> {
-    return this.http.post<any>(`${this.apiUrl}/admin/assignphysician`, { memberId: physician.memberId, physicianName: physician.physicianName, adminId: physician.adminId });
+    return this.http.post<any>(`${this.apiUrl}/admin/AssignPhysician`, { memberId: physician.memberId, physicianName: physician.physicianName, adminId: physician.adminId },
+      {
+        headers: new HttpHeaders(
+          {
+            'Authorization': 'Bearer ' + localStorage.getItem('token'),
+            'Content-Type': 'application/json'
+          })
+      });
   }
 }

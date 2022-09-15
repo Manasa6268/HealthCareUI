@@ -8,6 +8,7 @@ import { CustomValidatorDirective } from '../directives/custom-validator.directi
 import { EmailValidatorDirective } from '../directives/email-validator.directive';
 import { SearchmemberComponent } from './searchmember/searchmember.component';
 import { NgxPaginationModule } from 'ngx-pagination';
+import { HttpClientModule } from '@angular/common/http';
 @NgModule({
   declarations: [
     RegistrationComponent,
@@ -22,6 +23,7 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ReactiveFormsModule,
     FormsModule,
     NgxPaginationModule,
+    HttpClientModule,
   ]
 })
 export class AdminModule { }
