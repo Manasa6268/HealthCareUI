@@ -20,14 +20,10 @@ import { SubmitclaimComponent } from './member/submitclaim/submitclaim.component
 import { MemberdetailsComponent } from './member/memberdetails/memberdetails.component';
 import { SearchmemberComponent } from './admin/searchmember/searchmember.component';
 import { NgxPaginationModule } from 'ngx-pagination';
-
-
-
 @NgModule({
   declarations: [
     AppComponent,
     LoginComponent,
-
   ],
   imports: [
     BrowserModule,
@@ -54,8 +50,6 @@ import { NgxPaginationModule } from 'ngx-pagination';
     ),
     BrowserAnimationsModule,
     NgxPaginationModule,
-
-
   ],
   providers: [{ provide: JWT_OPTIONS, useValue: JWT_OPTIONS }, JwtHelperService, DatePipe],
   bootstrap: [AppComponent]

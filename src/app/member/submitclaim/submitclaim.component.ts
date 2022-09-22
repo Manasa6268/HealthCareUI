@@ -33,9 +33,7 @@ export class SubmitclaimComponent implements OnInit {
   count: number = 0;
   memberhide: boolean = false;
   membershide: boolean = false;
-
   constructor(private memberService: MemberService, private toaster: ToastrService, private router: Router, private datepipe: DatePipe, private activatedRoot: ActivatedRoute) { }
-
   ngOnInit(): void {
     this.Id = localStorage.getItem('userid');
     this.Role = localStorage.getItem('role');
@@ -49,7 +47,6 @@ export class SubmitclaimComponent implements OnInit {
       this.membershide = false;
       this.MemberIds = this.activatedRoot.snapshot.queryParams['memberId'];
       this.count = this.activatedRoot.snapshot.queryParams['count'];
-
     }
   }
   onSubmit() {
@@ -61,9 +58,7 @@ export class SubmitclaimComponent implements OnInit {
         .subscribe(
           data => {
             this.toaster.success("Claim Submission Successfull");
-
             this.router.navigate(['/memberdetails']);
-
           },
           error => {
             console.log(error);
@@ -80,11 +75,8 @@ export class SubmitclaimComponent implements OnInit {
             this.router.navigate(['/searchmember']);
           });
       }
-
     }
-
   }
-
   oncancel() {
     if (this.Role == "Member") {
       this.router.navigate(['/memberdetails']);
@@ -92,6 +84,5 @@ export class SubmitclaimComponent implements OnInit {
     else {
       this.router.navigate(['/searchmember']);
     }
-
   }
 }

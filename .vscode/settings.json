@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/acd7c5c9-da6b-4abb-b825-ce69d1abea09/AppServices/subscriptions/acd7c5c9-da6b-4abb-b825-ce69d1abea09/resourceGroups/manasa0211/providers/Microsoft.Web/sites/healthcaremanagement",
+    "appService.deploySubpath": "dist\\health-care-ui"
+}

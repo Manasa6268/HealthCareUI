@@ -16,7 +16,6 @@ export interface MemberDetails {
     createdDate: Date;
     modifiedDate: Date;
     modifiedBy: string;
-
 }
 export interface UserCredentials {
     userName: string;
@@ -41,7 +40,6 @@ export interface PhysicianAssign {
     adminId: string | null;
 }
 export interface MemberList {
-
     memberId: string;
     firstName: string;
     lastName: string;

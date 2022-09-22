@@ -5,14 +5,12 @@ import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrIconClasses, ToastrService } from 'ngx-toastr';
 import { MemberList, PhysicianAssign, PhysicianDetails } from 'src/app/models/admin.model';
 import { AdminService } from 'src/app/services/admin.service';
-
 @Component({
   selector: 'app-searchmember',
   templateUrl: './searchmember.component.html',
   styleUrls: ['./searchmember.component.css']
 })
 export class SearchmemberComponent implements OnInit {
-
   emailFormArray: string[] = [];
   memberid: string = '';
   firstName: string = '';
@@ -34,7 +32,6 @@ export class SearchmemberComponent implements OnInit {
     adminId: ''
   }
   constructor(private adminService: AdminService, private router: Router, private modalService: NgbModal, private toaster: ToastrService) { }
-
   ngOnInit(): void {
     this.adminService.GetPhysicianNames()
       .subscribe(
@@ -43,7 +40,6 @@ export class SearchmemberComponent implements OnInit {
         })
   }
   getMemberDetails() {
-
     this.adminService.GetMembers(this.memberid, this.firstName, this.lastName, this.PhysicianName, this.ClaimId)
       .subscribe(
         data => {
@@ -73,18 +69,12 @@ export class SearchmemberComponent implements OnInit {
             this.headerhide = false;
           }
         })
-
   }
   addmember() {
     this.router.navigate(['addmember'])
   }
-
   onsubmitclaim() {
-
-
     if (this.emailFormArray.length > 0) {
-      let memberId = JSON.stringify(this.emailFormArray)
-
       this.router.navigate(['/submitclaim'], { queryParams: { memberId: this.emailFormArray, count: this.emailFormArray.length } })
     }
     else {
@@ -92,7 +82,6 @@ export class SearchmemberComponent implements OnInit {
     }
   }
   onassign() {
-
   }
   open(content: any, memberId: string) {
 
@@ -133,7 +122,6 @@ export class SearchmemberComponent implements OnInit {
     this.MemberList = [];
     this.tblhide = true;
     this.headerhide = false;
-
   }
   logout() {
     localStorage.removeItem('userid');

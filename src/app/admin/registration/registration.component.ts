@@ -7,15 +7,12 @@ import { AdminService } from 'src/app/services/admin.service';
 import { ToastrService } from 'ngx-toastr';
 import { FormGroup, NgForm } from '@angular/forms';
 import { DatePipe } from '@angular/common';
-
-
 @Component({
   selector: 'app-registration',
   templateUrl: './registration.component.html',
   styleUrls: ['./registration.component.css']
 })
 export class RegistrationComponent implements OnInit {
-
   detailsform!: FormGroup
   passwordpattern: string = "^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9]).{8,15}$";
   namepattern: string = "^(?=.*?[A-Z])(?=.*?[a-z]).{5,20}$";
@@ -24,7 +21,6 @@ export class RegistrationComponent implements OnInit {
   Members: MemberDetails[] = [];
   States: States[] = []
   UserTypes: UserTypes[] = [];
-
   Member: MemberDetails = {
     id: 0,
     code: '',
@@ -44,10 +40,8 @@ export class RegistrationComponent implements OnInit {
     modifiedDate: new Date(),
     modifiedBy: ''
   }
-  today = this.datepipe.transform(new Date(), "yyyy-MM-dd")
-
+  today = this.datepipe.transform(new Date(), "yyyy-MM-dd");
   constructor(private router: Router, private modalService: NgbModal, private adminService: AdminService, private toaster: ToastrService, private datepipe: DatePipe) { }
-
   ngOnInit(): void {
     this.adminService.GetStates()
       .subscribe(
@@ -59,11 +53,8 @@ export class RegistrationComponent implements OnInit {
         data => {
           this.UserTypes = data;
         })
-
   }
-
   onSubmit() {
-
     this.adminService.Signup(this.Member)
       .pipe(first())
       .subscribe(
@@ -74,13 +65,10 @@ export class RegistrationComponent implements OnInit {
         error => {
           console.log(error);
         });
-
   }
   onDetailsSubmit() {
-
     this.toaster.success("Details Submitted Successfully")
     this.modalService.dismissAll();
-
   }
   login() {
     this.router.navigate(['']);
@@ -106,6 +94,5 @@ export class RegistrationComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
 }
 

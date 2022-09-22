@@ -1,5 +1,4 @@
 export interface ClaimDetails {
-
     id: number,
     code: string,
     memberId: string | null,
@@ -8,7 +7,4 @@ export interface ClaimDetails {
     claimDate: Date,
     remarks: string,
     createdBy: string | null;
-
-
-
 }

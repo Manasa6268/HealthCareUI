@@ -5,16 +5,13 @@ import { url } from '../models/url.model';
 import { MemberDetails, MemberList, PhysicianAssign, PhysicianDetails, States, UserCredentials, UserTypes } from '../models/admin.model';
 @Injectable({ providedIn: 'root' })
 export class AdminService {
-
   public apiUrl: string;
   constructor(private http: HttpClient) {
     this.apiUrl = url;
   }
   login(cred: UserCredentials): Observable<string> {
-
     return this.http.post<any>(`${this.apiUrl}/auth/gettoken`, { userName: cred.userName, password: cred.password });
   }
-
   Signup(member: MemberDetails): Observable<string> {
     return this.http.post<any>(`${this.apiUrl}/admin/signup`,
       {
@@ -40,27 +37,21 @@ export class AdminService {
 
     );
   }
-
   GetStates(): Observable<States[]> {
     return this.http.get<any>(`${this.apiUrl}/admin/states`);
   }
-
   GetUserTypes(): Observable<UserTypes[]> {
     return this.http.get<any>(`${this.apiUrl}/admin/usertypes`);
   }
-
   GetUserNames(): Observable<string[]> {
     return this.http.get<any>(`${this.apiUrl}/admin/usernames`);
   }
-
   GetEmails(): Observable<string[]> {
     return this.http.get<any>(`${this.apiUrl}/admin/mails`);
   }
-
   GetPhysicianNames(): Observable<PhysicianDetails[]> {
     return this.http.get<any>(`${this.apiUrl}/admin/phyisiciannames`);
   }
-  //this.apiUrl + '/admin/getmembers?
   GetMembers(MemberId: string, FirstName: string, LastName: string, PhysicianName: string, ClaimId: string): Observable<MemberList[]> {
     return this.http.get<MemberList[]>(this.apiUrl + '/admin/GetMemberDetails?MemberId=' + MemberId + '&FirstName=' + FirstName + '&LastName=' + LastName + '&PhysicianName=' + PhysicianName + '&ClaimId=' + ClaimId,
       {
@@ -71,7 +62,6 @@ export class AdminService {
           })
       });
   }
-  //`${this.apiUrl}/admin/assignphysician`
   AssignPhysician(physician: PhysicianAssign): Observable<string> {
     return this.http.post<any>(`${this.apiUrl}/admin/AssignPhysician`, { memberId: physician.memberId, physicianName: physician.physicianName, adminId: physician.adminId },
       {

@@ -3,7 +3,6 @@ import { Router } from '@angular/router';
 import { MemberDetails } from 'src/app/models/admin.model';
 import { ClaimDetails } from 'src/app/models/claim.model';
 import { MemberService } from 'src/app/services/member.service';
-
 @Component({
   selector: 'app-memberdetails',
   templateUrl: './memberdetails.component.html',
@@ -46,7 +45,6 @@ export class MemberdetailsComponent implements OnInit {
   onclaims: boolean = true;
   onsubmit: boolean = false;
   constructor(private memberService: MemberService, private router: Router) { }
-
   ngOnInit(): void {
     this.MemberId = localStorage.getItem('userid');
     this.code = parseInt(localStorage.getItem('code')!);
@@ -65,7 +63,6 @@ export class MemberdetailsComponent implements OnInit {
     this.memberService.GetClaims(this.MemberId)
       .subscribe(
         data => {
-          
           this.Claims = data;
           if (this.Claims.length > 0) {
             this.onclaims = false;

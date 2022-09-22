@@ -5,7 +5,6 @@ import { ToastrService } from 'ngx-toastr';
 import { first } from 'rxjs';
 import { MemberDetails, States } from 'src/app/models/admin.model';
 import { AdminService } from 'src/app/services/admin.service';
-
 @Component({
   selector: 'app-addmember',
   templateUrl: './addmember.component.html',
@@ -30,7 +29,7 @@ export class AddmemberComponent implements OnInit {
     dob: new Date(),
     address: '',
     city: '',
-    state: '',
+    state: 'Select',
     email: '',
     physicianName: '',
     createdDate: new Date(),
@@ -39,15 +38,14 @@ export class AddmemberComponent implements OnInit {
   }
   today = this.datepipe.transform(new Date(), "yyyy-MM-dd")
   constructor(private datepipe: DatePipe, private toaster: ToastrService, private adminService: AdminService, private router: Router) { }
-
   ngOnInit(): void {
     this.adminService.GetStates()
       .subscribe(
         data => {
           this.States = data;
         });
-  }
 
+  }
   onDetailsSubmit() {
     this.Member.userType = "Member";
     this.Member.password = "Admin@1234";
@@ -61,10 +59,8 @@ export class AddmemberComponent implements OnInit {
         error => {
           console.log(error);
         });
-
   }
   searchmember() {
     this.router.navigate(['/searchmember'])
   }
-
 }

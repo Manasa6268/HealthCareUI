@@ -4,7 +4,6 @@ import { UserCredentials } from 'src/app/models/admin.model';
 import { AdminService } from 'src/app/services/admin.service';
 import { JwtHelperService } from '@auth0/angular-jwt';
 import { ToastrService } from 'ngx-toastr';
-
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
@@ -24,19 +23,14 @@ export class LoginComponent implements OnInit {
   };
   UserId: number = 0;
   tokenPayload: any;
-
   constructor(private router: Router, private adminService: AdminService, private jwtHelper: JwtHelperService,
     private toaster: ToastrService) { }
-
   ngOnInit(): void {
-
   }
   signup() {
     this.router.navigate(['/register']);
   }
   onSubmit() {
-
-    // this.adminService.logout();
     this.loading = true;
     if (this.cred.userName != '' && this.cred.userName != '') {
       this.adminService.login(this.cred)
@@ -62,7 +56,6 @@ export class LoginComponent implements OnInit {
           error => {
             this.toaster.error('Login Failed! Please enter valid username and password')
             this.loading = false;
-
           });
     }
     this.submitted = true;
